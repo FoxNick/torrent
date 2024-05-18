@@ -23,6 +23,8 @@ import com.turn.ttorrent.common.Peer;
 import com.turn.ttorrent.common.Torrent;
 import com.turn.ttorrent.common.Utils;
 import com.turn.ttorrent.common.protocol.TrackerMessage.AnnounceRequestMessage;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -163,7 +165,7 @@ public class HTTPAnnounceRequestMessage extends HTTPTrackerMessage implements An
 			url.append("&ip=").append(this.getIp());
 		}
 
-		return new URL(url.toString());
+		return Urls.create(url.toString(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
 	}
 
 	public static HTTPAnnounceRequestMessage parse(ByteBuffer data) throws IOException, MessageValidationException {
