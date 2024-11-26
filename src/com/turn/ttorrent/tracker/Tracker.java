@@ -16,6 +16,8 @@
 package com.turn.ttorrent.tracker;
 
 import com.turn.ttorrent.common.Torrent;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -119,10 +121,7 @@ public class Tracker {
 	 */
 	public URL getAnnounceUrl() {
 		try {
-			return new URL("http",
-				this.address.getAddress().getCanonicalHostName(),
-				this.address.getPort(),
-				Tracker.ANNOUNCE_URL);
+			return Urls.create("http", this.address.getAddress().getCanonicalHostName(), this.address.getPort(), Tracker.ANNOUNCE_URL, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
 		} catch (MalformedURLException mue) {
 			logger.error("Could not build tracker URL: {}!", mue, mue);
 		}
