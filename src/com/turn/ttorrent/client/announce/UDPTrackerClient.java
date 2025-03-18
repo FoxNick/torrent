@@ -33,6 +33,7 @@ import java.net.UnknownHostException;
 import java.net.URI;
 import java.nio.ByteBuffer;
 import java.nio.channels.UnsupportedAddressTypeException;
+import java.security.SecureRandom;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
@@ -124,7 +125,7 @@ public class UDPTrackerClient extends TrackerClient {
 		this.address = new InetSocketAddress(tracker.getHost(), tracker.getPort());
 
 		this.socket = null;
-		this.random = new Random();
+		this.random = new SecureRandom();
 		this.connectionExpiration = null;
 		this.stop = false;
 	}
